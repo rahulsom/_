@@ -40,6 +40,9 @@ on:
       ORG_GRADLE_PROJECT_signingPassword:
         description: 'Signing password'
         required: false
+      GITHUB_TOKEN:
+        description: 'GitHub token'
+        required: false
 
 jobs:
   validation:
