@@ -4,12 +4,12 @@ on:
     inputs:
       java-version:
         description: 'Java version to use'
-        required: true
+        required: false
         default: '17'
         type: string
       java-distribution:
         description: 'Java distribution to use'
-        required: true
+        required: false
         default: 'zulu'
         type: string
       ORG_GRADLE_PROJECT_sonatypeUsername:
