@@ -6,22 +6,27 @@ on:
         description: 'Java version to use'
         required: true
         default: '17'
+        type: string
       java-distribution:
         description: 'Java distribution to use'
         required: true
         default: 'zulu'
+        type: string
       ORG_GRADLE_PROJECT_sonatypeUsername:
         description: 'Sonatype username'
         required: false
         default: 'rahulsom'
+        type: string
       DOCKER_USERNAME:
         description: 'Docker username'
         required: false
         default: 'rahulsom'
+        type: string
       publish-candidates:
         description: 'Publish to Sonatype'
         required: false
         default: 'false'
+        type: boolean
     secrets:
       DOCKER_PASSWORD:
         description: 'Docker password or token'
