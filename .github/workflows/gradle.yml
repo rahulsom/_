@@ -23,9 +23,6 @@ on:
         required: false
         default: 'false'
     secrets:
-      GITHUB_TOKEN:
-        description: 'GitHub token'
-        required: false
       DOCKER_PASSWORD:
         description: 'Docker password or token'
         required: false
