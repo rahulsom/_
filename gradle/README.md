@@ -22,7 +22,14 @@ jobs:
       # Defaults (can be overriden here)
       java-version: 17
       java-distribution: 'zulu'
-      DOCKERHUB_USERNAME: rahulsom
+      DOCKER_USERNAME: rahulsom
       ORG_GRADLE_PROJECT_sonatypeUsername: rahulsom
       publish-candidates: false
 ```
+
+Also, set these secrets:
+
+* DOCKER_PASSWORD
+* ORG_GRADLE_PROJECT_sonatypePassword
+* ORG_GRADLE_PROJECT_signingKey
+* ORG_GRADLE_PROJECT_signingPassword
