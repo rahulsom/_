@@ -25,6 +25,12 @@ jobs:
       DOCKER_USERNAME: rahulsom
       ORG_GRADLE_PROJECT_sonatypeUsername: rahulsom
       publish-candidates: false
+    secrets:
+      DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+      ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_sonatypePassword }}
+      ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_signingKey }}
+      ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_signingPassword }}
+
 ```
 
 Also, set these secrets:
