@@ -55,20 +55,6 @@ jobs:
     needs: validation
     steps:
       - uses: actions/checkout@v3
-      - name: Cache Gradle Caches
-        id: cache-gradle-caches
-        uses: actions/cache@v3
-        with:
-          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle') }}
-          path: |
-            ~/.gradle/caches
-      - name: Cache Gradle Wrapper
-        id: cache-gradle-wrapper
-        uses: actions/cache@v3
-        with:
-          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-          path: |
-            ~/.gradle/wrapper
 
       - name: Set up JDK ${{ inputs.java-version }}
         uses: actions/setup-java@v3
@@ -76,7 +62,11 @@ jobs:
           java-version: ${{ inputs.java-version }}
           distribution: ${{ inputs.java-distribution }}
 
+      - uses: gradle/gradle-build-action@v2
+        name: Setup Gradle
+
       - name: Build
+        id: gradle
         run: ./gradlew build
 
       - name: Build Snapshot
@@ -125,3 +115,16 @@ jobs:
           name: JUnit Tests
           path: '**/build/test-results/test/TEST-*.xml'
           reporter: java-junit
+
+      - name: "Add build scan URL as PR comment"
+        uses: actions/github-script@v5
+        if: github.event_name == 'pull_request' && failure()
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ ${{ github.workflow }} failed: ${{ steps.gradle.outputs.build-scan-url }}'
+            })
