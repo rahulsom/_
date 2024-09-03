@@ -61,6 +61,10 @@ jobs:
         id: gradle
         run: ./gradlew build
 
+      - name: Generate and submit dependency graph
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+        uses: gradle/actions/dependency-submission@v4
+
       - name: Build Snapshot
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         env:
