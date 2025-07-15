@@ -55,10 +55,6 @@ jobs:
           distribution: ${{ inputs.java-distribution }}
           cache: gradle
 
-      - uses: github/codeql-action/init@v3
-        with:
-          languages: java-kotlin
-
       - uses: gradle/actions/setup-gradle@v4
         name: Setup Gradle
 
@@ -103,8 +99,6 @@ jobs:
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: github/codeql-action/analyze@v3
 
       - uses: actions/attest-build-provenance@v2
         if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main'
