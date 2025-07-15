@@ -55,6 +55,10 @@ jobs:
           distribution: ${{ inputs.java-distribution }}
           cache: gradle
 
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: java-kotlin
+
       - uses: gradle/actions/setup-gradle@v4
         name: Setup Gradle
 
@@ -95,16 +99,14 @@ jobs:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
         run: ./gradlew -Prelease.useLastTag=true build final
 
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v4
-        if: always()
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
         with:
-          report_paths: '**/build/test-results/test/TEST-*.xml'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: always()
+      - uses: github/codeql-action/analyze@v3
+
+      - uses: actions/attest-build-provenance@v2
+        if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main'
         with:
-          name: JUnit Tests
-          path: '**/build/test-results/test/TEST-*.xml'
-          reporter: java-junit
+          subject-path: 'build/repos/**/*.jar,build/repos/**/*.pom,build/repos/**/*.module'
