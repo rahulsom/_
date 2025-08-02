@@ -43,6 +43,15 @@ jobs:
   build:
     name: "Build with Gradle"
     runs-on: ubuntu-latest
+
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+      id-token: write
+      attestations: write
+
     steps:
       - uses: actions/checkout@v4
 
