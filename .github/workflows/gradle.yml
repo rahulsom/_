@@ -79,6 +79,8 @@ jobs:
           ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew build snapshot
 
       - name: Build Candidate
