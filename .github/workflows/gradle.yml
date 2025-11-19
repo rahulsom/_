@@ -6,6 +6,7 @@ on:
       java-distribution:  { required: false, type: string,  default: 'zulu',     description: 'Java distribution to use' }
       DOCKER_USERNAME:    { required: false, type: string,  default: 'rahulsom', description: 'Docker username' }
       publish-candidates: { required: false, type: boolean, default: false,      description: 'Publish Candidates to Sonatype' }
+      codeql:             { required: false, type: boolean, default: false,      description: 'Enable CodeQL Analysis' }
     secrets:
       DOCKER_PASSWORD:                     { required: false, description: 'Docker password or token' }
       ORG_GRADLE_PROJECT_SONATYPEUSERNAME: { required: false, description: 'Sonatype username' }
@@ -69,6 +70,7 @@ jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    if: ${{ inputs.codeql }}
     permissions:
       security-events: write
       packages: read
