@@ -95,6 +95,14 @@ jobs:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
 
+      - name: Set up JDK ${{ inputs.java-version }}
+        if: ${{ matrix.language == 'java-kotlin' }}
+        uses: actions/setup-java@v5
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: ${{ inputs.java-distribution }}
+          cache: gradle
+
       - if: matrix.build-mode == 'manual'
         shell: bash
         run: |
