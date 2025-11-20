@@ -52,7 +52,7 @@ jobs:
       - name: Build Branch
         if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master' && !startsWith(github.ref, 'refs/tags/v')
         id: gradle
-        run: ./gradlew build
+        run: ./gradlew build --no-daemon
 
       - name: Build Snapshot
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
@@ -63,17 +63,17 @@ jobs:
           ORG_GRADLE_PROJECT_signingPassword:  ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
           GITHUB_TOKEN:                        ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR:                        ${{ github.actor }}
-        run: ./gradlew build snapshot
+        run: ./gradlew build snapshot --no-daemon
 
       - name: Build Candidate
         if: startsWith(github.ref, 'refs/tags/v') && contains(github.ref, '-rc') && github.event.inputs.publish-candidates
         env: *gradle_env
-        run: ./gradlew -Prelease.useLastTag=true build candidate
+        run: ./gradlew -Prelease.useLastTag=true build candidate --no-daemon
 
       - name: Build Final
         if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-rc')
         env: *gradle_env
-        run: ./gradlew -Prelease.useLastTag=true build final
+        run: ./gradlew -Prelease.useLastTag=true build final --no-daemon
 
       - name: Perform CodeQL Analysis
         if: ${{ inputs.codeql }}
