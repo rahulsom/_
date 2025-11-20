@@ -7,13 +7,6 @@ Builds a Gradle project that relies on [waena](https://github.com/rahulsom/waena
 ```yaml
 name: Gradle Build
 
-permissions:
-  contents: read
-  # Enable these 3 if you enable codeql
-  security-events: write
-  actions: read
-  packages: read
-
 on:
   pull_request:
     branches: ['*']
@@ -21,12 +14,19 @@ on:
     branches: ['*']
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+.rc[0-9]+'
 
 jobs:
   build:
     uses: rahulsom/_/.github/workflows/gradle.yml@main
+    permissions:
+      contents: read
+      # Enable these 3 if you enable CodeQL
+      security-events: write
+      actions: read
+      packages: read
     with:
-      # Defaults (can be overriden here)
+      # Defaults (can be overridden here)
       java-version: 17
       java-distribution: 'zulu'
       publish-candidates: false
@@ -34,13 +34,13 @@ jobs:
     secrets:
       ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_sonatypeUsername }}
       ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_sonatypePassword }}
-      ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_signingKey }}
-      ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_signingPassword }}
+      ORG_GRADLE_PROJECT_signingKey:       ${{ secrets.ORG_GRADLE_PROJECT_signingKey }}
+      ORG_GRADLE_PROJECT_signingPassword:  ${{ secrets.ORG_GRADLE_PROJECT_signingPassword }}
 ```
 
 Also, set these secrets:
 
-* DOCKER_PASSWORD
+* ORG_GRADLE_PROJECT_sonatypeUsername
 * ORG_GRADLE_PROJECT_sonatypePassword
 * ORG_GRADLE_PROJECT_signingKey
 * ORG_GRADLE_PROJECT_signingPassword
