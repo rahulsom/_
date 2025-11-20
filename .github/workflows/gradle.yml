@@ -4,11 +4,9 @@ on:
     inputs:
       java-version:       { required: false, type: string,  default: '17',       description: 'Java version to use' }
       java-distribution:  { required: false, type: string,  default: 'zulu',     description: 'Java distribution to use' }
-      DOCKER_USERNAME:    { required: false, type: string,  default: 'rahulsom', description: 'Docker username' }
       publish-candidates: { required: false, type: boolean, default: false,      description: 'Publish Candidates to Sonatype' }
       codeql:             { required: false, type: boolean, default: false,      description: 'Enable CodeQL Analysis' }
     secrets:
-      DOCKER_PASSWORD:                     { required: false, description: 'Docker password or token' }
       ORG_GRADLE_PROJECT_SONATYPEUSERNAME: { required: false, description: 'Sonatype username' }
       ORG_GRADLE_PROJECT_SONATYPEPASSWORD: { required: false, description: 'Sonatype password' }
       ORG_GRADLE_PROJECT_SIGNINGKEY:       { required: false, description: 'Signing key' }
@@ -59,8 +57,6 @@ jobs:
       - name: Build Snapshot
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         env: &gradle_env
-          DOCKER_USERNAME: ${{ inputs.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
           ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
