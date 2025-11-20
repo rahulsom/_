@@ -46,7 +46,7 @@ jobs:
         if: ${{ inputs.codeql }}
         uses: github/codeql-action/init@v4
         with:
-          languages: java,kotlin
+          languages: java-kotlin
           build-mode: manual
 
       - name: Build Branch
@@ -59,10 +59,10 @@ jobs:
         env: &gradle_env
           ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
           ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORG_GRADLE_PROJECT_signingKey:       ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
+          ORG_GRADLE_PROJECT_signingPassword:  ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
+          GITHUB_TOKEN:                        ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR:                        ${{ github.actor }}
         run: ./gradlew build snapshot
 
       - name: Build Candidate
