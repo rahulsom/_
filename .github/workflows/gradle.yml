@@ -6,6 +6,7 @@ on:
       java-distribution:  { required: false, type: string,  default: 'zulu', description: 'Java distribution to use' }
       publish-candidates: { required: false, type: boolean, default: false,  description: 'Publish Candidates to Sonatype' }
       codeql:             { required: false, type: boolean, default: false,  description: 'Enable CodeQL Analysis for Java code' }
+      codeql-actions:     { required: false, type: boolean, default: false,  description: 'Enable CodeQL Analysis for GitHub Actions' }
       codeql-typescript:  { required: false, type: boolean, default: false,  description: 'Enable CodeQL Analysis for TypeScript code' }
       codeql-javascript:  { required: false, type: boolean, default: false,  description: 'Enable CodeQL Analysis for JavaScript code' }
     secrets:
@@ -86,7 +87,7 @@ jobs:
   analyze-actions:
     name: Analyze GitHub Actions
     runs-on: ubuntu-latest
-    if: ${{ inputs.codeql }}
+    if: ${{ inputs.codeql-actions }}
     permissions:
       security-events: write
       packages: read
