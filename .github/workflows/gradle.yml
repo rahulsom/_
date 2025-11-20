@@ -84,7 +84,7 @@ jobs:
           category: "/language:java"
 
   analyze-actions:
-    name: Analyze (actions)
+    name: Analyze GitHub Actions
     runs-on: ubuntu-latest
     if: ${{ inputs.codeql }}
     permissions:
@@ -108,7 +108,7 @@ jobs:
           category: "/language:actions"
 
   analyze-javascript:
-    name: Analyze (actions)
+    name: Analyze JavaScript
     runs-on: ubuntu-latest
     if: ${{ inputs.codeql-javascript }}
     permissions:
@@ -132,7 +132,7 @@ jobs:
           category: "/language:javascript"
 
   analyze-typescript:
-    name: Analyze (actions)
+    name: Analyze TypeScript
     runs-on: ubuntu-latest
     if: ${{ inputs.codeql-typescript }}
     permissions:
