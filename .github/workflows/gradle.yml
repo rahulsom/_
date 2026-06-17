@@ -23,7 +23,7 @@ jobs:
       security-events: write
       actions: read
       contents: read
-      packages: read
+      packages: write
     steps:
       - uses: actions/checkout@v6
         with:
